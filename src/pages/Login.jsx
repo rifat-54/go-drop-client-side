@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import TypeWriter from "./../utilities/TypeWriter";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import SocialLogin from "../components/ShareComponents/SocialLogin";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
+    const{loginUser}=useAuth()
     const [showPassword, setShowPassword] = useState(false);
 
      const handleSubmit=(e)=>{
@@ -11,7 +15,16 @@ const Login = () => {
 
             const password=e.target.password.value;
             const email=e.target.email.value;
-            console.log(password,email);
+            
+
+            try {
+                loginUser(email,password)
+                .then(()=>{
+                    toast.success("Successfully Login")
+                })
+            } catch (error) {
+                
+            }
      }
 
 
@@ -52,7 +65,7 @@ const Login = () => {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <input
-            required='true'
+            required={true}
             name="email"
               type="email"
               placeholder="Email"
@@ -60,7 +73,7 @@ const Login = () => {
             />
             <div className="relative">
             <input
-            required='true'
+           required={true}
             name="password"
             type={showPassword?'text':'password'}
               placeholder="Password"
@@ -87,7 +100,7 @@ const Login = () => {
               </a>
             </div>
 
-            <button className="btn bg-gradient-to-br from-[#9c9fe2] via-[#494dcfee] to-[#2b2f93ee] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
+            <button className="btn bg-gradient-to-br from-[#4f46e5] via-[#3b82f6] to-[#06b6d4] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
               Login
             </button>
           </form>
@@ -97,6 +110,7 @@ const Login = () => {
               Sign up
             </a>
           </p>
+        <SocialLogin></SocialLogin>
         </motion.div>
       </div>
     </div>

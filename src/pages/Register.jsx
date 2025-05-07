@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import TypeWriter from "./../utilities/TypeWriter";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import SocialLogin from "../components/ShareComponents/SocialLogin";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Register = () => {
+
+    const{updateUser, createUser,}=useAuth()
+
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     username: "",
     email: "",
     password: "",
     confirmPassword: "",
+    photo:""
   });
-
-  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,10 +36,10 @@ const Register = () => {
     return regex.test(password);
   };
 
-  console.log(error, formData.password);
-
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // password validation
     if (!isValidPassword(formData.password)) {
       return setError(
         "Password should be atleast 6 character one uppercase one lowercase one special character one number"
@@ -44,9 +50,23 @@ const Register = () => {
       return setError("Passwords do not match");
     }
 
-    setError('')
+    setError("");
 
-    
+    // register
+ 
+
+      try {
+        createUser(formData?.email,formData?.password)
+        .then(()=>{
+            updateUser(formData?.username,formData?.photo)
+            .then(()=>{
+                toast.success("Successfully Register!")
+            })
+        })
+      } catch (error) {
+        
+      }
+
     // Handle registration logic here (e.g., API call)
     console.log("Form submitted:", formData);
   };
@@ -87,57 +107,68 @@ const Register = () => {
             Register for a new account
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="space-y-4 relative" >
-            <input
-            required='true'
-              type="text"
-              name="username"
-              placeholder="Username"
-              //   value={formData.username}
-              onChange={handleChange}
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
-            />
-            <input
-            required='true'
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
-            />
-            <input
-              type={showPassword?'text':'password'}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleChange}
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
-            />
-            <span
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute z-50 right-4 top-[56%] transform -translate-y-1/2 text-white cursor-pointer"
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </span>
-            <input
-              type={showConfirm?'text':'password'}
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
-            />
-            <span
-              onClick={() => setShowConfirm((prev) => !prev)}
-              className="absolute z-50  right-4 top-[83%] transform -translate-y-1/2 text-white cursor-pointer"
-            >
-              {showConfirm ? <FaEyeSlash /> : <FaEye />}
-            </span>
+            <div className="space-y-4 relative">
+              <input
+               required={true}
+                type="text"
+                name="username"
+                placeholder="Username"
+                  value={formData.username}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              />
+              <input
+               required={true}
+                type="url"
+                name="photo"
+                placeholder="Photo Url"
+                  value={formData.photo}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              />
+              <input
+               required={true}
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              />
+              <input
+              required={true}
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              />
+              <span
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute z-50 right-4 top-[65%] transform -translate-y-1/2 text-white cursor-pointer"
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+              <input
+              
+                type={showConfirm ? "text" : "password"}
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              />
+              <span
+                onClick={() => setShowConfirm((prev) => !prev)}
+                className="absolute z-50  right-4 top-[86%] transform -translate-y-1/2 text-white cursor-pointer"
+              >
+                {showConfirm ? <FaEyeSlash /> : <FaEye />}
+              </span>
             </div>
             {error && <p className="text-[#FF9F00]">{error}</p>}
 
-            <button className="btn bg-gradient-to-br from-[#9c9fe2] via-[#494dcfee] to-[#2b2f93ee] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
+            <button className="btn bg-gradient-to-br from-[#4f46e5] via-[#3b82f6] to-[#06b6d4] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
               Register
             </button>
           </form>
@@ -148,6 +179,7 @@ const Register = () => {
               Login here
             </a>
           </p>
+          <SocialLogin></SocialLogin>
         </motion.div>
       </div>
     </div>

@@ -1,6 +1,22 @@
 import React from "react";
+import useAuth from "../hooks/useAuth";
+import toast from "react-hot-toast";
+import { Link, NavLink } from "react-router-dom";
 
 const Navber = () => {
+    const{user,logoutUser}=useAuth()
+
+    const handleLogout=()=>{
+        try {
+         logoutUser()
+         .then(()=>{
+            toast.success('Successfully Logout')
+         })    
+        } catch (error) {
+            
+        }
+    }
+    
   return (
     <div>
       <div className="navbar px-1 flex justify-between bg-[#202e39] text-[#fffe] shadow-sm">
@@ -9,11 +25,14 @@ const Navber = () => {
         </div>
         <div>
             <ul>
-                <li>Home</li>
+                <li><NavLink to={'/'}>Home</NavLink></li>
             </ul>
         </div>
         <div className="flex-none">
-          <div className="dropdown dropdown-end">
+            {user?.email?
+
+            <div className="flex items-center gap-2 md:gap-3">
+                <div className="dropdown dropdown-end ">
             <div
               tabIndex={0}
               role="button"
@@ -22,7 +41,7 @@ const Navber = () => {
               <div className="indicator">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
+                  className="h-5 w-5 "
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -35,7 +54,7 @@ const Navber = () => {
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                   />{" "}
                 </svg>
-                <span className="badge badge-sm indicator-item">8</span>
+                <span className="badge bg-red-500 text-white badge-sm indicator-item">8</span>
               </div>
             </div>
             <div
@@ -61,8 +80,9 @@ const Navber = () => {
             >
               <div className="w-10 rounded-full">
                 <img
+                   referrerPolicy="no-referrer"
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                  src={user?.photoURL}
                 />
               </div>
             </div>
@@ -80,10 +100,18 @@ const Navber = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <a>Logout</a>
+                <button onClick={handleLogout}>Logout</button>
               </li>
             </ul>
           </div>
+            </div>
+        :
+        
+        <Link className="mr-1 md:mr-2" to={'/login'}>
+           Login
+        </Link>
+        }
+          
         </div>
       </div>
     </div>
