@@ -9,7 +9,7 @@ const Banner = () => {
   className="hero min-h-screen"
   style={{
     backgroundImage:
-      "url(https://i.ibb.co.com/LzG8W3Jp/an-orange-semi-truck-driving-across-the-road-in-late-evening-by-sunset-free-photo-1.jpg)",
+      "url(https://i.ibb.co.com/QV4fMmV/download-12.jpg)",
   }}
 >
   <div className="hero-overlay"></div>

@@ -33,7 +33,7 @@ const OurFreature = () => {
               {features.map((feature, index) => (
                 <div
                   key={index}
-                  className="bg-gray-50 rounded-2xl p-6 shadow hover:shadow-md transition"
+                  className="bg-gray-50 hover:transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 rounded-2xl p-6 shadow hover:shadow-md transition"
                 >
                   <div className="flex items-center justify-center mb-4">
                     {feature.icon} 

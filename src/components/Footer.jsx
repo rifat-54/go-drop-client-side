@@ -12,7 +12,7 @@ const Footer = () => {
   // components/Footer.jsx
 
   return (
-    <footer className="bg-[#161851] text-[#fffe] py-12 px-6">
+    <footer className="bg-[#161851] mt-20 text-[#fffe] py-12 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Brand */}
         <div>
