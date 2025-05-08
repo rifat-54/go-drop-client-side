@@ -19,7 +19,7 @@ const Navber = () => {
     
   return (
     <div>
-      <div className="navbar px-1 flex justify-between bg-[#202e39] text-[#fffe] shadow-sm">
+      <div className="navbar px-1 flex justify-between bg-[#161851] text-[#fffe] shadow-sm">
         <div className="flex">
           <a className="btn btn-ghost text-xl">Go Drop</a>
         </div>

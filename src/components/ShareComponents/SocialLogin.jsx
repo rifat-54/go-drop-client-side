@@ -2,9 +2,10 @@ import React from 'react';
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const SocialLogin = () => {
     const{googleLogin}=useAuth()
-   
+    const navigate=useNavigate()
 
 
     const handleLogin=()=>{
@@ -13,6 +14,7 @@ const SocialLogin = () => {
             .then(()=>{
 
                 toast.success('Successfully login')
+                navigate('/')
             })
         } catch (error) {
             

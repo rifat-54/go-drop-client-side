@@ -5,6 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SocialLogin from "../components/ShareComponents/SocialLogin";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
@@ -13,7 +14,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
-
+  const navigate=useNavigate()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -61,6 +62,7 @@ const Register = () => {
             updateUser(formData?.username,formData?.photo)
             .then(()=>{
                 toast.success("Successfully Register!")
+                navigate('/')
             })
         })
       } catch (error) {
@@ -72,7 +74,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#f5f5f5] via-[#636468] to-[#303132]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br  from-[#d8d9de] via-[#6f71af] to-[#2e317e]">
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
         {/* Left Side Image */}
         <div
