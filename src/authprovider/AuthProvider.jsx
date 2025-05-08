@@ -1,6 +1,8 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { GoogleAuthProvider, createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import app from '../firebase/firebase.config';
+import useAxiosPublic from './../hooks/useAxiosPublic';
+import axios from 'axios';
 
 
 export const AuthContex=createContext(null)
@@ -8,10 +10,12 @@ const auth = getAuth(app);
 
 const AuthProvider = ({children}) => {
 
-    const [user,setUser]=useState()
+    const [user,setUser]=useState(null)
     const[loading,setLoading]=useState(true)
 
     const googleProvider=new GoogleAuthProvider()
+
+    const axiosPublic=useAxiosPublic()
 
     const googleLogin=()=>{
         setLoading(true);
@@ -43,10 +47,27 @@ const AuthProvider = ({children}) => {
         return signOut(auth)
     }
 
-    console.log("user-> ",user);
+    
+
     useEffect(()=>{
-        const unsubscribe=onAuthStateChanged(auth,(currentUser)=>{
+        const unsubscribe=onAuthStateChanged(auth,async(currentUser)=>{
             setUser(currentUser);
+
+            console.log('currentUser-> ',currentUser);
+
+            if(currentUser?.email){
+                const email={email:currentUser?.email}
+                // console.log('email->',email);
+                try {
+                    const {data}=await axiosPublic.post('/jwt',email,{withCredentials:true})
+                    // const data= await axios.post('http://localhost:5000/jwt',email,{withCredentials:true})
+                    
+                } catch (error) {
+                    console.log(error);
+                }
+            }else{
+                await axiosPublic('/logout',{withCredentials:true})
+            }
 
             setLoading(false);
         })

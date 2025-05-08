@@ -3,6 +3,8 @@ import MainLayout from "../layout/MainLayout";
 import Home from "../pages/home/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import DemoPage from "../pages/DemoPage";
+import PrivateRoutes from "./PrivateRoutes";
 
 const routes=createBrowserRouter([
     {
@@ -20,6 +22,10 @@ const routes=createBrowserRouter([
             {
                 path:'/register',
                 element:<Register></Register>
+            },
+            {
+                path:'/demo',
+                element:<PrivateRoutes><DemoPage></DemoPage></PrivateRoutes>
             }
         ]
     }

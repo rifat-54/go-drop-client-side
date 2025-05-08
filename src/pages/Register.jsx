@@ -5,7 +5,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SocialLogin from "../components/ShareComponents/SocialLogin";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Register = () => {
 
@@ -15,6 +15,11 @@ const Register = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [error, setError] = useState("");
   const navigate=useNavigate()
+
+  const location=useLocation()
+
+  // console.log('location-> ',location.state);
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -62,7 +67,7 @@ const Register = () => {
             updateUser(formData?.username,formData?.photo)
             .then(()=>{
                 toast.success("Successfully Register!")
-                navigate('/')
+                navigate(location?.state)
             })
         })
       } catch (error) {
@@ -181,7 +186,7 @@ const Register = () => {
               Login here
             </a>
           </p>
-          <SocialLogin></SocialLogin>
+          <SocialLogin from={location.state}></SocialLogin>
         </motion.div>
       </div>
     </div>

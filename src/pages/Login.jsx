@@ -5,12 +5,15 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import SocialLogin from "../components/ShareComponents/SocialLogin";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const{loginUser}=useAuth()
     const [showPassword, setShowPassword] = useState(false);
+    const location = useLocation();
+    const from = location?.state?.from || "/";
     const navigate=useNavigate()
+    // console.log('from->',from);
 
      const handleSubmit=(e)=>{
             e.preventDefault();
@@ -23,7 +26,7 @@ const Login = () => {
                 loginUser(email,password)
                 .then(()=>{
                     toast.success("Successfully Login")
-                    navigate('/')
+                    navigate(from)
                 })
             } catch (error) {
                 
@@ -109,11 +112,11 @@ const Login = () => {
           </form>
           <p className="text-white/70 text-sm mt-6 text-center">
             Don't have an account?{" "}
-            <a href="/register" className="underline hover:text-white">
+            <Link to={'/register'} state={from} className="underline hover:text-white">
               Sign up
-            </a>
+            </Link>
           </p>
-        <SocialLogin></SocialLogin>
+        <SocialLogin from={from}></SocialLogin>
         </motion.div>
       </div>
     </div>

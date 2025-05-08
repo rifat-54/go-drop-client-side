@@ -26,6 +26,7 @@ const Navber = () => {
         <div>
             <ul>
                 <li><NavLink to={'/'}>Home</NavLink></li>
+                <li><NavLink to={'/demo'}>demo</NavLink></li>
             </ul>
         </div>
         <div className="flex-none">
