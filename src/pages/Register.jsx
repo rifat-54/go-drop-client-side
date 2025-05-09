@@ -6,10 +6,13 @@ import SocialLogin from "../components/ShareComponents/SocialLogin";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
+import { initializeApp } from 'firebase/app';
+import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Register = () => {
 
     const{updateUser, createUser,}=useAuth()
+    const axiosPublic=useAxiosPublic()
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
@@ -43,7 +46,7 @@ const Register = () => {
     return regex.test(password);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =(e) => {
     e.preventDefault();
 
     // password validation
@@ -61,19 +64,36 @@ const Register = () => {
 
     // register
  
+    const info={
+      name:formData?.username,
+      email:formData?.email,
+      photo:formData?.photo,
+      role:formData?.role
+    }
+    
 
-      // try {
-      //   createUser(formData?.email,formData?.password)
-      //   .then(()=>{
-      //       updateUser(formData?.username,formData?.photo)
-      //       .then(()=>{
-      //           toast.success("Successfully Register!")
-      //           navigate(location?.state)
-      //       })
-      //   })
-      // } catch (error) {
+      try {
+        createUser(formData?.email,formData?.password)
+        .then(()=>{
+            updateUser(formData?.username,formData?.photo)
+            .then(async()=>{
+                toast.success("Successfully Register!")
+
+                // save to server
+
+                try {
+                  const {data}=await axiosPublic.post('/users',info);
+                 
+                } catch (error) {
+                  
+                }
+
+                navigate(location?.state)
+            })
+        })
+      } catch (error) {
         
-      // }
+      }
 
     // Handle registration logic here (e.g., API call)
     console.log("Form submitted:", formData);

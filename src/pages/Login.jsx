@@ -9,6 +9,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const{loginUser}=useAuth()
+    
     const [showPassword, setShowPassword] = useState(false);
     const location = useLocation();
     const from = location?.state?.from || "/";
