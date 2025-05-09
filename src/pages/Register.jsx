@@ -25,7 +25,8 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    photo:""
+    photo:"",
+    role:''
   });
 
   const handleChange = (e) => {
@@ -61,25 +62,25 @@ const Register = () => {
     // register
  
 
-      try {
-        createUser(formData?.email,formData?.password)
-        .then(()=>{
-            updateUser(formData?.username,formData?.photo)
-            .then(()=>{
-                toast.success("Successfully Register!")
-                navigate(location?.state)
-            })
-        })
-      } catch (error) {
+      // try {
+      //   createUser(formData?.email,formData?.password)
+      //   .then(()=>{
+      //       updateUser(formData?.username,formData?.photo)
+      //       .then(()=>{
+      //           toast.success("Successfully Register!")
+      //           navigate(location?.state)
+      //       })
+      //   })
+      // } catch (error) {
         
-      }
+      // }
 
     // Handle registration logic here (e.g., API call)
     console.log("Form submitted:", formData);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br  from-[#d8d9de] via-[#6f71af] to-[#2e317e]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br  from-[#d8d9de] pb-16 pt-5 via-[#6f71af] to-[#2e317e]">
       <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
         {/* Left Side Image */}
         <div
@@ -142,6 +143,30 @@ const Register = () => {
                 onChange={handleChange}
                 className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
               />
+
+              {/* select type */}
+              <select 
+              defaultValue={''}
+              required={true}
+                type="text"
+                name="role"
+                placeholder="select"
+                // value={formData.role}
+                onChange={handleChange}
+                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80">
+
+                  <option disabled className=" bg-gray-300 text-black " value="">Select User Type</option>
+
+                  <option className=" bg-white/20 text-black " value="User">User</option>
+
+                  <option className=" bg-white/20 text-black "  value="Delivery Man">Delivery Man</option>
+
+
+              </select>
+
+
+              {/* password */}
+
               <input
               required={true}
                 type={showPassword ? "text" : "password"}
@@ -153,7 +178,7 @@ const Register = () => {
               />
               <span
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute z-50 right-4 top-[65%] transform -translate-y-1/2 text-white cursor-pointer"
+                className="absolute z-50 right-4 top-[71%] transform -translate-y-1/2 text-white cursor-pointer"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -168,7 +193,7 @@ const Register = () => {
               />
               <span
                 onClick={() => setShowConfirm((prev) => !prev)}
-                className="absolute z-50  right-4 top-[86%] transform -translate-y-1/2 text-white cursor-pointer"
+                className="absolute z-50  right-4 top-[89%] transform -translate-y-1/2 text-white cursor-pointer"
               >
                 {showConfirm ? <FaEyeSlash /> : <FaEye />}
               </span>

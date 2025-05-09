@@ -10,6 +10,11 @@ import BookParcel from "../pages/BookParcel";
 import MyParcel from "../pages/MyParcel";
 import MyDeliveryList from "../pages/deliveryList/MyDeliveryList";
 import MyRevews from "../pages/revew/MyRevews";
+import Statistics from "../pages/statistics/Statistics";
+import AllUsers from "../pages/allusers/AllUsers";
+import AllParcels from "../pages/allparcel/AllParcels";
+import AllDeliveryMan from "../pages/alldeliveryman/AllDeliveryMan";
+import Profile from "../pages/profile/Profile";
 
 const routes=createBrowserRouter([
     {
@@ -36,7 +41,7 @@ const routes=createBrowserRouter([
     },
     {
         path:"/dashboard",
-        element:<Dashboard></Dashboard>,
+        element:<PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children:[
             {
                path:'/dashboard/book-parcel',
@@ -53,6 +58,26 @@ const routes=createBrowserRouter([
             {
                 path:'/dashboard/my-revews',
                 element:<MyRevews></MyRevews>
+            },
+            {
+                path:'/dashboard/statistics',
+                element:<Statistics></Statistics>
+            },
+            {
+                path:'/dashboard/all-users',
+                element:<AllUsers></AllUsers>
+            },
+            {
+                path:'/dashboard/all-parcels',
+                element:<AllParcels></AllParcels>
+            },
+            {
+                path:'/dashboard/all-delivery-men',
+                element:<AllDeliveryMan></AllDeliveryMan>
+            },
+            {
+                path:'/dashboard/profile',
+                element:<Profile></Profile>
             }
         ]
     }

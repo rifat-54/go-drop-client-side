@@ -4,10 +4,11 @@ import useAuth from '../hooks/useAuth';
 import LoadingSpinner from '../components/ShareComponents/LoadingSpinner';
 
 const PrivateRoutes = ({children}) => {
+    const{user,loading}=useAuth()
     const location=useLocation();
 
-    console.log('private-> ',location);
-    const{user,loading}=useAuth()
+    // console.log('private-> ',loading);
+
 
     if(loading){
         return <LoadingSpinner></LoadingSpinner>
