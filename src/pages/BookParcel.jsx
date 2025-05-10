@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import useAxiosSecure from './../hooks/useAxiosSecure';
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 
 const BookParcel = () => {
@@ -8,6 +10,7 @@ const BookParcel = () => {
   
   const axiosSecure=useAxiosSecure()
   const [price,setPrice]=useState(0)
+  const navigate=useNavigate()
 
 
   const [formData, setFormData] = useState({
@@ -64,6 +67,21 @@ const BookParcel = () => {
 
     try {
       const {data}=await axiosSecure.post('/book-parcel',parcelDetails)
+     
+      if(data.insertedId){
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Successfully Booked a Parcel",
+          showConfirmButton: false,
+          timer: 1500
+        });
+
+        navigate('/dashboard/my-parcel');
+        
+      }
+      
+
     } catch (error) {
       
     }

@@ -18,7 +18,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div>
-                    <p className='text-center mt-16'><span className='text-2xl font-semibold'>Role : </span><span className='text-xl font-semibold'>{role}</span></p>
+                    <p className='text-center mt-16'><span className='text-xl font-semibold'>Role : </span><span className='font-bold text-xl'>{role}</span></p>
                 </div>
                 <div className='flex flex-wrap gap-10 mt-14 items-center justify-between px-3 md:px-10'>
                     <div>
