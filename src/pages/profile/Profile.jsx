@@ -1,9 +1,13 @@
 import React from 'react';
 import useAuth from '../../hooks/useAuth';
 import ButtonPrimary from '../../components/ShareComponents/ButtonPrimary';
+import useRole from '../../hooks/useRole';
 
 const Profile = () => {
     const {user}=useAuth()
+    const{role}=useRole();
+    
+
     return (
         <div className='flex p-2 justify-center items-center'>
             <div className='bg-white  w-full mx-auto mt-28 rounded-md shadow-md  md:w-4/5 lg:w-4/6'>
@@ -14,7 +18,7 @@ const Profile = () => {
                     </div>
                 </div>
                 <div>
-                    <p className='text-center mt-16'><span className='text-2xl font-semibold'>Role : </span><span className='text-xl font-semibold'>Admin</span></p>
+                    <p className='text-center mt-16'><span className='text-2xl font-semibold'>Role : </span><span className='text-xl font-semibold'>{role}</span></p>
                 </div>
                 <div className='flex flex-wrap gap-10 mt-14 items-center justify-between px-3 md:px-10'>
                     <div>

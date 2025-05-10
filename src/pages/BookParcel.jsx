@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
+import useAxiosSecure from './../hooks/useAxiosSecure';
+
 
 const BookParcel = () => {
   const { user } = useAuth();
+  
+  const axiosSecure=useAxiosSecure()
   const [price,setPrice]=useState(0)
+
 
   const [formData, setFormData] = useState({
     phone: "",
@@ -22,6 +27,7 @@ const BookParcel = () => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
+    // calculate price useing weight
     if(name==='parcelWeight'){
         let num=parseInt(value)
        
@@ -44,16 +50,23 @@ const BookParcel = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const parcelDetails = {
       name: user?.displayName,
       email: user?.email,
-      price:'',
+      price,
       ...formData,
     };
     console.log("Parcel Booking Submitted:", parcelDetails);
+
     // Submit to backend here
+
+    try {
+      const {data}=await axiosSecure.post('/book-parcel',parcelDetails)
+    } catch (error) {
+      
+    }
   };
 
   return (
