@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/ShareComponents/LoadingSpinner';
-import Pagenation from '../../components/ShareComponents/Pagenation';
 
 const AllUsers = () => {
     const axiosSecure=useAxiosSecure()
@@ -33,7 +32,7 @@ const AllUsers = () => {
     const firstIndex=lastIndex-perpage;
 
     const currentUsers=alluser.slice(firstIndex,lastIndex);
-    
+
 
     console.log(currentUsers);
   

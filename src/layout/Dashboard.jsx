@@ -9,10 +9,12 @@ import { IoHomeOutline } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
 import { CiLogout } from "react-icons/ci";
 import useAuth from "../hooks/useAuth";
+import useRole from './../hooks/useRole';
 
 const Dashboard = () => {
   const{user,logoutUser,updateUser}=useAuth()
   const [open, setOpen] = useState(false);
+  const{role}=useRole()
 
   const handleOpen = () => {
     setOpen(!open);
@@ -31,9 +33,16 @@ const Dashboard = () => {
           </span>
             <div  className="flex flex-col justify-end gap-6 items-start">
                 <div>
-                    <User handleOpen={handleOpen}></User>
-                    <DeliveryMan handleOpen={handleOpen}></DeliveryMan>
-                    <Admin handleOpen={handleOpen}></Admin>
+
+                  {/* {role==='User' &&  <User handleOpen={handleOpen}></User>}
+                  {role==='Delivery Man' && <DeliveryMan handleOpen={handleOpen}></DeliveryMan>}
+                  {role==='Admin' && <Admin handleOpen={handleOpen}></Admin>} */}
+
+
+                  <User handleOpen={handleOpen}></User>
+                  <DeliveryMan handleOpen={handleOpen}></DeliveryMan>
+                  <Admin handleOpen={handleOpen}></Admin>
+                    
                 </div>
                 <div className="divider mt-10"></div>
                 <div>

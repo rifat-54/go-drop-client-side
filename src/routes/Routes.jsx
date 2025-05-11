@@ -15,6 +15,7 @@ import AllUsers from "../pages/allusers/AllUsers";
 import AllParcels from "../pages/allparcel/AllParcels";
 import AllDeliveryMan from "../pages/alldeliveryman/AllDeliveryMan";
 import Profile from "../pages/profile/Profile";
+import VerifyDeliveryMan from "../pages/verify/VerifyDeliveryMan";
 
 const routes=createBrowserRouter([
     {
@@ -78,6 +79,10 @@ const routes=createBrowserRouter([
             {
                 path:'/dashboard/profile',
                 element:<Profile></Profile>
+            },
+            {
+                path:'/dashboard/verify-deliveryman',
+                element:<VerifyDeliveryMan></VerifyDeliveryMan>
             }
         ]
     }
