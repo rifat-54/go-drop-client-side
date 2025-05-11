@@ -6,8 +6,11 @@ import ManageParcelModal from "../../components/modal/ManageParcelModal";
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
   const [openModal, setOpenModal] = useState(false);
+  const[parcelid,setParcelId]=useState(null)
 
-  const { data: allparcel = [], isLoading } = useQuery({
+
+  // get all parcel data
+  const { data: allparcel = [], isLoading,refetch } = useQuery({
     queryKey: ["allparcel"],
     queryFn: async () => {
       const { data } = await axiosSecure("/all-parcel");
@@ -16,6 +19,9 @@ const AllParcels = () => {
   });
 
   console.log(allparcel);
+
+
+  
 
   //   get booking data from modgodb _id
   const getbookingDate = (id) => {
@@ -26,9 +32,15 @@ const AllParcels = () => {
 
   //   handle modal
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (id) => {
+    
+    setParcelId(id)
     setOpenModal(!openModal);
   };
+
+  // select delevary man
+
+  
 
   return (
     <div className="relative">
@@ -48,6 +60,7 @@ const AllParcels = () => {
           </thead>
           <tbody>
             {allparcel.map((parcel, index) => (
+            
               <tr key={index}>
                 <td>{parcel?.name}</td>
                 <td>{parcel?.phone}</td>
@@ -58,7 +71,7 @@ const AllParcels = () => {
                 <td>
                   <span
                     className={`badge ${
-                      parcel.status === "pending"
+                      parcel.status === "Pending"
                         ? "badge-warning"
                         : "badge-success"
                     }`}
@@ -68,13 +81,15 @@ const AllParcels = () => {
                 </td>
                 <td>
                   <button
-                    onClick={handleOpenModal}
+                    onClick={()=>handleOpenModal(parcel?._id)}
                     className="btn btn-sm btn-outline btn-info text-black hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  hover:text-white"
                   >
                     Manage
                   </button>
                 </td>
+               
               </tr>
+              
             ))}
           </tbody>
         </table>
@@ -83,6 +98,8 @@ const AllParcels = () => {
         {openModal && (
           <ManageParcelModal
             handleOpenModal={handleOpenModal}
+            parcelid={parcelid}
+            refetch={refetch}
           ></ManageParcelModal>
         )}
       </div>
