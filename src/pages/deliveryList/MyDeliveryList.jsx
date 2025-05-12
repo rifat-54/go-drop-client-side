@@ -3,17 +3,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/ShareComponents/LoadingSpinner";
-import WarningModal from "../../components/modal/WarningModal";
+import Swal from "sweetalert2";
 
 
 const MyDeliveryList = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState(false);
-  const[updateStatusText,setUpdateStatusText]=useState('')
 
-  const { data: deiveryList = [], isLoading } = useQuery({
+
+  const { data: deiveryList = [], isLoading,refetch } = useQuery({
     queryKey: ["deiveryList"],
     queryFn: async () => {
       const { data } = await axiosSecure(`/my-delivery-list/${user.email}`);
@@ -27,32 +25,53 @@ const MyDeliveryList = () => {
 
   console.log(deiveryList);
 
-  //   handle modal
-  const handleModal = () => {
-    setOpen(!open);
-    if(update){
-        handleUpdateStauts('new')
-    }
-
-  };
+ 
 
   // update status
 
-  const handleUpdateStauts = (newStatus) => {
-    if(!open && !update){
-        setUpdateStatusText(newStatus)
-        handleModal();
-    }
-    
+  const handleUpdateStauts = (newStatus,id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async(result) => {
+      if (result.isConfirmed) {
 
-    console.log(updateStatusText,update);
+
+        // update stauts
+
+        try {
+          const {data}=await axiosSecure.patch(`/update-booking-status/${id}`,{newStatus})
+          console.log(data);
+          if(data?.modifiedCount){
+            Swal.fire({
+              title: "Updated!",
+              text: "Status Is Updated.",
+              icon: "success",
+              showConfirmButton: false,
+              timer: 1500
+            });
+            refetch()
+          }
+        } catch (error) {
+          
+        }
+
+        
+       
+      }
+    });
   };
 
   return (
     <div className="p-6 relative">
       <h2 className="text-2xl font-bold text-center mb-6">My Delivery List</h2>
 
-      <div className={`overflow-x-auto ${open && "blur-md"}`}>
+      <div className={`overflow-x-auto `}>
         <table className="table w-full text-sm">
           <thead className="bg-base-200 text-base font-semibold">
             <tr>
@@ -84,7 +103,13 @@ const MyDeliveryList = () => {
                 <td>{parcel?.receiverPhone}</td>
                 <td>{parcel?.deliveryDate}</td>
                 <td>{parcel?.deliveryMan?.approximatedate}</td>
-                <td>{parcel?.status}</td>
+                <td>
+                  <span className={`${parcel?.status==='On The Way' && 'text-yellow-500'}
+                  ${parcel?.status==='Cancelled' && 'text-red-500'}
+                  ${parcel?.status==='Delivered' && 'text-green-500'}
+                  `}>{parcel?.status}</span>
+                  
+                  </td>
                 <td>{parcel?.deliveryAddress}</td>
 
                 <td>
@@ -95,8 +120,8 @@ const MyDeliveryList = () => {
 
                 <td>
                   <button
-                    onClick={() => handleUpdateStauts("Cancelled")}
-                    disabled={parcel?.status === "Cancelled"}
+                    onClick={() => handleUpdateStauts("Cancelled",parcel?._id)}
+                    disabled={parcel?.status !== "On The Way" }
                     className="btn btn-sm bg-red-500 text-white hover:bg-red-600"
                   >
                     Cancel
@@ -105,8 +130,8 @@ const MyDeliveryList = () => {
 
                 <td>
                   <button
-                    onClick={() => handleUpdateStauts("Delivered")}
-                    disabled={parcel?.status === "Delivered"}
+                    onClick={() => handleUpdateStauts("Delivered",parcel?._id)}
+                    disabled={parcel?.status !== "On The Way"}
                     className="btn btn-sm bg-green-500 text-white hover:bg-green-600"
                   >
                     Deliver
@@ -117,14 +142,7 @@ const MyDeliveryList = () => {
           </tbody>
         </table>
       </div>
-      <div className="fixed top-[20%] right-[20%]">
-        {open && (
-          <WarningModal
-            handleModal={handleModal}
-            setUpdate={setUpdate}
-          ></WarningModal>
-        )}
-      </div>
+      
     </div>
   );
 };
