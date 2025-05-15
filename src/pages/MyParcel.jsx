@@ -29,6 +29,8 @@ const MyParcel = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
+  console.log(myParcel);
+
   const getDateFrom_id = (id) => {
     return new Date(parseInt(id.substring(0, 8), 16)*1000).toLocaleDateString();
   };
@@ -175,12 +177,19 @@ const MyParcel = () => {
 
                 {/* Pay button (Bonus guideline logic to be implemented) */}
                 <td className="px-6 py-3">
-                  <button
-                    onClick={() => handlePay(parcel._id)}
+                {parcel?.paymentStatus==='Payed' || parcel?.status!=='Delivered' ?
+                <button disabled  className="bg-gray-100 text-black px-2 py-1 rounded cursor-not-allowed">
+                   Pay
+                </button>
+              :
+              <Link to={`/dashboard/payment/${parcel?._id}`}
+                    
                     className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700"
                   >
                     Pay
-                  </button>
+                  </Link>
+              }
+                  
                 </td>
               </tr>
             ))}

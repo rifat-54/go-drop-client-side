@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
 import toast from "react-hot-toast";
 import { Link, NavLink } from "react-router-dom";
+import logoImg from "../assets/android-chrome-192x192.png";
+import { MdDarkMode } from "react-icons/md";
+import { CiDark } from "react-icons/ci";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from './../hooks/useAxiosSecure';
+import useRole from './../hooks/useRole';
 
 const Navber = () => {
-  const { user, logoutUser } = useAuth();
+  const { user, logoutUser,loading } = useAuth();
+  const [theme, setTheme] = useState("light");
+  const axiosSecure=useAxiosSecure()
+  const{role}=useRole()
+
 
   const handleLogout = () => {
     try {
@@ -14,11 +24,39 @@ const Navber = () => {
     } catch (error) {}
   };
 
+  // get card data
+
+  const {data:cart={}}=useQuery({
+    queryKey:['cart',user?.email],
+    enabled: !loading && !!user?.email,
+    queryFn:async()=>{
+      const {data}=await axiosSecure(`/mycart/${user?.email}`);
+      return data;
+    }
+  })
+
+
+
+  // dark and light theme
+  const handleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
   return (
     <div>
-      <div className="navbar px-1 flex justify-between bg-[#161851] text-[#fffe] shadow-sm">
-        <div className="flex">
-          <a className="btn btn-ghost text-xl">Go Drop</a>
+      <div className="navbar px-1 flex justify-between bg-[#1874c1] text-[#fffe] shadow-sm">
+        <div className="flex items-center md:ml-1 gap-5">
+          <img
+            referrerPolicy="no-referrer"
+            className="h-10"
+            src={logoImg}
+            alt=""
+          />
+          <Link to={"/"} className=" text-xl">
+            Go Drop
+          </Link>
         </div>
         <div>
           <ul>
@@ -27,10 +65,11 @@ const Navber = () => {
             </li>
           </ul>
         </div>
-        <div className="flex-none">
+        <div className="flex">
           {user?.email ? (
             <div className="flex items-center gap-2 md:gap-3">
-              <div className="dropdown dropdown-end ">
+              {
+                role==='User' && <div className="dropdown dropdown-end ">
                 <div
                   tabIndex={0}
                   role="button"
@@ -53,7 +92,7 @@ const Navber = () => {
                       />{" "}
                     </svg>
                     <span className="badge bg-red-500 text-white badge-sm indicator-item">
-                      8
+                      {cart?.totalBooked}
                     </span>
                   </div>
                 </div>
@@ -62,16 +101,18 @@ const Navber = () => {
                   className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow"
                 >
                   <div className="card-body">
-                    <span className="text-lg font-bold">8 Items</span>
-                    <span className="text-info">Subtotal: $999</span>
+                    <span className="text-lg text-black font-bold">{cart?.totalBooked} Items</span>
+                    <span className="text-info">Subtotal: ${cart?.totalCost}</span>
                     <div className="card-actions">
-                      <button className="btn btn-primary btn-block">
+                      <Link to={'/dashboard/my-parcel'} className="btn btn-primary btn-block">
                         View cart
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
+              }
+              
               <div className="dropdown dropdown-end">
                 <div
                   tabIndex={0}
@@ -110,6 +151,19 @@ const Navber = () => {
               Login
             </Link>
           )}
+
+          {/* dark mode */}
+
+          {/* <div className="flex items-center -mr-1 ml-2">
+            <button onClick={handleTheme} className="text-xl md:text-2xl">
+              {theme === "light" ? (
+                <MdDarkMode />
+              ) : (
+                <CiDark className="text-white" />
+              )}
+            </button>
+          </div> */}
+
         </div>
       </div>
     </div>
