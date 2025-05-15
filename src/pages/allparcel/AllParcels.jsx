@@ -18,7 +18,7 @@ const AllParcels = () => {
     },
   });
 
-  console.log(allparcel);
+  // console.log(allparcel);
 
 
   
@@ -70,19 +70,31 @@ const AllParcels = () => {
                 <td>${parcel?.price}</td>
                 <td>
                   <span
-                    className={`badge ${
-                      parcel.status === "Pending"
-                        ? "badge-warning"
-                        : "badge-success"
-                    }`}
+                    className={`px-2 py-1 rounded text-white font-semibold
+                    ${
+                      parcel?.status === 'Pending'
+                        ? 'bg-yellow-500'
+                        : parcel?.status === 'On The Way'
+                        ? 'bg-blue-500'
+                        : parcel?.status === 'Delivered'
+                        ? 'bg-green-600'
+                        : parcel?.status === 'Cancelled'
+                        ? 'bg-red-500'
+                        : 'bg-gray-400'
+                    }
+                  `}
                   >
                     {parcel.status}
                   </span>
                 </td>
                 <td>
                   <button
+                  disabled={parcel?.status==='Delivered' || parcel?.status==='Cancelled'}
                     onClick={()=>handleOpenModal(parcel?._id)}
-                    className="btn btn-sm btn-outline btn-info text-black hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  hover:text-white"
+                    className={`btn btn-sm btn-outline btn-info text-black ${parcel.status==='Delivered' || parcel.status==='Cancelled'?' cursor-not-allowed bg-gray-100 text-black'
+                  :
+                'hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105 hover:text-white'
+              }  `}
                   >
                     Manage
                   </button>
@@ -94,7 +106,7 @@ const AllParcels = () => {
           </tbody>
         </table>
       </div>
-      <div className="fixed top-[20%] w-5/6 left-[35%]">
+      <div className="fixed top-[20%] w-full md:w-11/12 lg:w-9/12 left-[0%]  md:left-[35%]">
         {openModal && (
           <ManageParcelModal
             handleOpenModal={handleOpenModal}

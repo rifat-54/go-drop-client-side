@@ -28,6 +28,7 @@ const SocialLogin = ({ from = "/" }) => {
 
         try {
           const { data } = await axiosPublic.post("/users", info);
+          // console.log(data);
        
         } catch (error) {
 

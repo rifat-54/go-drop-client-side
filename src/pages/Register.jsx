@@ -96,17 +96,17 @@ const Register = () => {
       }
 
     // Handle registration logic here (e.g., API call)
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br  from-[#d8d9de] pb-16 pt-5 via-[#6f71af] to-[#2e317e]">
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br  ">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2  backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
         {/* Left Side Image */}
         <div
           className="hidden md:flex items-center justify-center bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://source.unsplash.com/600x800/?technology,register')`,
+            backgroundImage: `url('https://i.ibb.co/ffYDCJP/6333213.jpg')`,
           }}
         >
           <div className="bg-black bg-opacity-50 w-full h-full flex items-center justify-center text-white font-bold text-3xl p-8">
@@ -131,10 +131,10 @@ const Register = () => {
           transition={{ duration: 0.6 }}
           className="p-8 sm:p-12 flex flex-col justify-center"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold  mb-6">
             Register for a new account
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 text-black">
             <div className="space-y-4 relative">
               <input
                required={true}
@@ -143,7 +143,7 @@ const Register = () => {
                 placeholder="Username"
                   value={formData.username}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+                className="input input-bordered w-full placeholder-gray-800 bg-gray-100"
               />
               <input
                required={true}
@@ -152,7 +152,7 @@ const Register = () => {
                 placeholder="Photo Url"
                   value={formData.photo}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+                className="input input-bordered w-full bg-gray-100 placeholder-gray-800"
               />
               <input
                required={true}
@@ -161,7 +161,7 @@ const Register = () => {
                 placeholder="Email"
                 value={formData.email}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+                className="input input-bordered w-full bg-gray-100 placeholder-gray-800"
               />
 
               {/* select type */}
@@ -173,7 +173,7 @@ const Register = () => {
                 placeholder="select"
                 // value={formData.role}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80">
+                className="input input-bordered w-full bg-gray-100 placeholder-gray-800">
 
                   <option disabled className=" bg-gray-300 text-black " value="">Select User Type</option>
 
@@ -194,11 +194,11 @@ const Register = () => {
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+                className="input input-bordered w-full bg-gray-100 placeholder-gray-800"
               />
               <span
                 onClick={() => setShowPassword((prev) => !prev)}
-                className="absolute z-50 right-4 top-[71%] transform -translate-y-1/2 text-white cursor-pointer"
+                className="absolute z-50 right-4 top-[71%] transform -translate-y-1/2 text-black cursor-pointer"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
@@ -209,25 +209,25 @@ const Register = () => {
                 placeholder="Confirm Password"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+                className="input input-bordered w-full bg-gray-100 placeholder-gray-800"
               />
               <span
                 onClick={() => setShowConfirm((prev) => !prev)}
-                className="absolute z-50  right-4 top-[89%] transform -translate-y-1/2 text-white cursor-pointer"
+                className="absolute z-50  right-4 top-[89%] transform -translate-y-1/2 text-black cursor-pointer"
               >
                 {showConfirm ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            {error && <p className="text-[#FF9F00]">{error}</p>}
+            {error && <p className="text-red-500">{error}</p>}
 
             <button className="btn bg-gradient-to-br from-[#4f46e5] via-[#3b82f6] to-[#06b6d4] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
               Register
             </button>
           </form>
 
-          <p className="text-white/70 text-sm mt-6 text-center">
+          <p className="text-black text-sm mt-6 text-center">
             Already have an account?{" "}
-            <a href="/login" className="underline hover:text-white">
+            <a href="/login" className="underline hover:text-blue-500">
               Login here
             </a>
           </p>

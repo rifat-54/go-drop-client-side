@@ -32,7 +32,7 @@ const AllUsers = () => {
 
   const currentUsers = alluser.slice(firstIndex, lastIndex);
 
-  console.log(currentUsers);
+  // console.log(currentUsers);
 
   const handleUpdateStatus = (updateRole, id) => {
     Swal.fire({

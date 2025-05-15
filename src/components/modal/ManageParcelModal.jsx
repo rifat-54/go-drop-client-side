@@ -23,7 +23,7 @@ const ManageParcelModal = ({ handleOpenModal,parcelid,refetch }) => {
     const date = e.target.ApproximateDate.value;
     const deliveryMan = e.target.deliveryMan.value;
     const [id,name,phone,email]=deliveryMan.split(',');
-    console.log(id,name,phone);
+    // console.log(id,name,phone);
 
     // send data to database
 
@@ -37,7 +37,7 @@ const ManageParcelModal = ({ handleOpenModal,parcelid,refetch }) => {
 
     try {
       const {data}=await axiosSecure.patch(`/assign-parcel-deliveryman/${parcelid}`,info)
-      console.log(data);
+      // console.log(data);
       if(data.modifiedCount){
         toast.success('Successfully Assigned');
         refetch()
@@ -51,7 +51,7 @@ const ManageParcelModal = ({ handleOpenModal,parcelid,refetch }) => {
   };
 
   return (
-    <div className="z-40 w-4/6  border-red-500 bg-white rounded-md  ">
+    <div className="z-40 w-full md:px-2 md:w-4/6 bg-white rounded-md  ">
       <form onSubmit={handleSubmit} className="px-10 from py-10">
         <div>
           <label className="block my-2 font-semibold">

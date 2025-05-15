@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Pagenation = ({array,setReturnArray,perpage=5}) => {
-    console.log(array);
+    // console.log(array);
 
     const [currentPage,setCurrentPage]=useState(1)
     const toatlPage=Math.ceil(array.length/perpage)

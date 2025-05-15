@@ -36,21 +36,21 @@ const Login = () => {
 
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#d8d9de] via-[#6f71af] to-[#2e317e]">
-      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 bg-white/10 backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
+    <div className="min-h-screen flex items-center justify-center ">
+      <div className="w-full max-w-5xl grid grid-cols-1 md:grid-cols-2  backdrop-blur-md rounded-3xl overflow-hidden shadow-2xl border border-white/20">
         {/* Left Side Image */}
         <div
           className="hidden md:flex items-center justify-center bg-cover bg-center"
           style={{
-            backgroundImage: `url('https://source.unsplash.com/600x800/?technology,login')`,
+            backgroundImage: `url('https://i.ibb.co/dsbDCf7f/3094352.jpg')`,
           }}
         >
-          <div className="bg-black bg-opacity-50 w-full h-full flex items-center justify-center text-white font-bold text-3xl p-8">
+          <div className=" bg-[#646363] bg-opacity-40 w-full h-full flex items-center justify-center  font-bold text-3xl p-8">
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-4xl font-bold text-center text-gray-100"
+              className="text-4xl font-bold text-center text-black"
             >
               <TypeWriter
                 text={" Welcome to Go Drop!"}
@@ -67,7 +67,7 @@ const Login = () => {
           transition={{ duration: 0.6 }}
           className="p-8 sm:p-12 flex flex-col justify-center"
         >
-          <h2 className="text-3xl font-bold text-white mb-6">
+          <h2 className="text-3xl font-bold text-black mb-6">
             Login to your account
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -76,7 +76,7 @@ const Login = () => {
             name="email"
               type="email"
               placeholder="Email"
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              className="input input-bordered w-full bg-gray-100 placeholder-gray-800"
             />
             <div className="relative">
             <input
@@ -84,11 +84,11 @@ const Login = () => {
             name="password"
             type={showPassword?'text':'password'}
               placeholder="Password"
-              className="input input-bordered w-full bg-white/20 text-white placeholder-white/80"
+              className="input input-bordered w-full  bg-gray-100 placeholder-gray-800"
             />
             <span
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute z-50 right-4 top-[55%] transform -translate-y-1/2 text-white cursor-pointer"
+              className="absolute z-50 right-4 top-[55%] transform -translate-y-1/2 text-black cursor-pointer"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
@@ -97,7 +97,7 @@ const Login = () => {
 
             </div>
 
-            <div className="flex justify-between text-sm text-white/80">
+            <div className="flex justify-between text-sm text-black">
               <label>
                 <input type="checkbox" className="mr-2" />
                 Remember me
@@ -111,9 +111,9 @@ const Login = () => {
               Login
             </button>
           </form>
-          <p className="text-white/70 text-sm mt-6 text-center">
+          <p className="text-black text-sm mt-6 text-center">
             Don't have an account?{" "}
-            <Link to={'/register'} state={from} className="underline hover:text-white">
+            <Link to={'/register'} state={from} className="underline hover:text-blue-500">
               Sign up
             </Link>
           </p>

@@ -18,7 +18,7 @@ const AllDeliveryMan = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  console.log(allDeliveryman);
+  // console.log(allDeliveryman);
 
 
   const handleUpdateSttus= async(id)=>{

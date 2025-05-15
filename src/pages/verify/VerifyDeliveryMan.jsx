@@ -17,7 +17,7 @@ const VerifyDeliveryMan = () => {
     const userAddress=e.target.useraddress.value;
     const age=e.target.age.value;
 
-    console.log(phone,userAddress,age);
+    // console.log(phone,userAddress,age);
     const info={
         phone,userAddress,age,
         email:user?.email

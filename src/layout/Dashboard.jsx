@@ -20,11 +20,11 @@ const Dashboard = () => {
     setOpen(!open);
   };
 
-  console.log(open);
+  // console.log(open);
 
   return (
     <div className="relative">
-      <FaBarsStaggered onClick={handleOpen} className="md:hidden absolute top-2 text-xl text-[#161851] left-2" />
+      <FaBarsStaggered onClick={handleOpen} className="md:hidden z-50 fixed top-3 text-xl text-[#161851] left-3" />
       <div className="md:flex gap-2 ">
         <aside className={`sm:w-4/6 md:w-1/4 py-5  text-[#0F172A] bg-[#E0F2FE] md:block  ${open?'block':'hidden'} min-h-screen `}>
           <span className="ml-10 md:text-xl mt-10 flex gap-5 items-center">
@@ -34,19 +34,19 @@ const Dashboard = () => {
             <div  className="flex flex-col justify-end gap-6 items-start">
                 <div>
 
-                  {/* {role==='User' &&  <User handleOpen={handleOpen}></User>}
+                  {role==='User' &&  <User handleOpen={handleOpen}></User>}
                   {role==='Delivery Man' && <DeliveryMan handleOpen={handleOpen}></DeliveryMan>}
-                  {role==='Admin' && <Admin handleOpen={handleOpen}></Admin>} */}
+                  {role==='Admin' && <Admin handleOpen={handleOpen}></Admin>}
 
 
-                  <User handleOpen={handleOpen}></User>
+                  {/* <User handleOpen={handleOpen}></User>
                   <DeliveryMan handleOpen={handleOpen}></DeliveryMan>
-                  <Admin handleOpen={handleOpen}></Admin>
+                  <Admin handleOpen={handleOpen}></Admin> */}
                     
                 </div>
                 <div className="divider mt-10"></div>
                 <div>
-                  <span className="ml-10 md:text-xl  flex gap-5 items-center">
+                  <span onClick={handleOpen} className="ml-10 md:text-xl  flex gap-5 items-center">
                     <CgProfile />
                     
                     <NavLink to={"/dashboard/profile"}>Profile</NavLink>

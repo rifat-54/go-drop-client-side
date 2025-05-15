@@ -16,6 +16,7 @@ import AllParcels from "../pages/allparcel/AllParcels";
 import AllDeliveryMan from "../pages/alldeliveryman/AllDeliveryMan";
 import Profile from "../pages/profile/Profile";
 import VerifyDeliveryMan from "../pages/verify/VerifyDeliveryMan";
+import UpdateParcel from "../pages/UpdateParcel";
 
 const routes=createBrowserRouter([
     {
@@ -83,6 +84,10 @@ const routes=createBrowserRouter([
             {
                 path:'/dashboard/verify-deliveryman',
                 element:<VerifyDeliveryMan></VerifyDeliveryMan>
+            },
+            {
+                path:'/dashboard/update-parcel/:id',
+                element:<UpdateParcel></UpdateParcel>
             }
         ]
     }

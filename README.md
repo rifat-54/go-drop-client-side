@@ -11,3 +11,7 @@ freature
    .use react hot toast for alert
    . use transtack query for fetch data
    .
+
+
+   http://localhost:5000
+   https://go-drop-server-side.vercel.app

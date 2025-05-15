@@ -1,20 +1,36 @@
 import React from "react";
 import CountUp from "react-countup";
 import { FaBox, FaCheckCircle, FaUsers } from "react-icons/fa";
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
+import { useQuery } from "@tanstack/react-query";
 
-const Statistics = () => {
+const Stats = ({title=true}) => {
+  const axiosPublic = useAxiosPublic();
+
+  const { data: statsdata = [], isLoading } = useQuery({
+    queryKey: ["stats"],
+    queryFn: async () => {
+      const { data } = await axiosPublic("/stats");
+      return data;
+    },
+  });
+
+  // console.log(statsdata);
+
   const stats = {
-    booked: 18425,
-    delivered: 17630,
-    users: 9420,
+    booked: statsdata?.totalBooked || 18425,
+    delivered: statsdata?.totalDelivered || 17630,
+    users: statsdata?.totalUser || 9420,
   };
 
   return (
     <section className="bg-white py-12 px-4">
       <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl font-bold text-gray-900 mb-16">
+        {
+          title && <h2 className="text-3xl font-bold text-gray-900 mb-16">
           Our Impact in Numbers
         </h2>
+        }
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {/* Parcels Booked */}
@@ -55,4 +71,4 @@ const Statistics = () => {
   );
 };
 
-export default Statistics;
+export default Stats;

@@ -1,90 +1,106 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../components/ShareComponents/LoadingSpinner";
 import useAuth from "../hooks/useAuth";
-import useAxiosSecure from './../hooks/useAxiosSecure';
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
 
-
-const BookParcel = () => {
+const UpdateParcel = () => {
+  const { id } = useParams();
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  
-  const axiosSecure=useAxiosSecure()
-  const [price,setPrice]=useState(0)
-  const navigate=useNavigate()
+  const [price, setPrice] = useState(0);
+  const [weight, setWeight] = useState("");
 
+  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    phone: "",
-    parcelType: "",
-    parcelWeight: "",
-    receiverName: "",
-    receiverPhone: "",
-    deliveryAddress: "",
-    deliveryDate: "",
-    latitude: "",
-    longitude: "",
-   
+  // get data from database
+  const { data: parcel = [], isLoading } = useQuery({
+    queryKey: ["parcel"],
+    queryFn: async () => {
+      const { data } = await axiosSecure(`/parcel-data/${id}`);
+      return data;
+    },
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  //   if (isLoading) {
+  //     return <LoadingSpinner></LoadingSpinner>;
+  //   }
 
-    // calculate price useing weight
-    if(name==='parcelWeight'){
-        let num=parseInt(value)
-       
-        let total=0;
-
-       
-        if(num<=1){
-            total=50;
-        }else if(num>1 && num<=2){
-            total=100;
-        }else{
-            total=150;
-        }
-
-        setPrice(total)
-       
-
-
-        
+  useEffect(() => {
+    if (parcel?.parcelWeight) {
+      setWeight(parcel?.parcelWeight);
     }
-  };
+  }, [parcel]);
 
-  const handleSubmit = async(e) => {
+  useEffect(() => {
+    const num = parseInt(weight);
+    if (isNaN(num)) return;
+
+    let total = 0;
+
+    if (num <= 1) {
+      total = 50;
+    } else if (num <= 2) {
+      total = 100;
+    } else {
+      total = 150;
+    }
+    setPrice(total);
+  }, [weight]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const phone = form.phone.value;
+    const parcelType = form.parcelType.value;
+    const receiverName = form.receiverName.value;
+    const receiverPhone = form.receiverPhone.value;
+    const deliveryAddress = form.deliveryAddress.value;
+    const deliveryDate = form.deliveryDate.value;
+    const latitude = form.latitude.value;
+    const longitude = form.longitude.value;
+
     const parcelDetails = {
       name: user?.displayName,
       email: user?.email,
+      phone,
       price,
-      ...formData,
+      parcelType,
+      parcelWeight: weight,
+      receiverName,
+      receiverPhone,
+      deliveryAddress,
+      deliveryDate,
+      latitude,
+      longitude,
     };
     // console.log("Parcel Booking Submitted:", parcelDetails);
 
+    // price,
     // Submit to backend here
 
     try {
-      const {data}=await axiosSecure.post('/book-parcel',parcelDetails)
-     
-      if(data.insertedId){
+      const { data } = await axiosSecure.patch(
+        `/update-parcel/${id}`,
+        parcelDetails
+      );
+
+      if (data.modifiedCount) {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Successfully Booked a Parcel",
+          title: "Successfully Updated Parcel",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
 
-        navigate('/dashboard/my-parcel');
+        navigate("/dashboard/my-parcel");
         
       }
-      
-
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   return (
@@ -117,9 +133,9 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Phone Number</label>
           <input
-            type="number"
+            defaultValue={parcel?.phone}
+            type="text"
             name="phone"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             required
           />
@@ -129,9 +145,9 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Parcel Type</label>
           <input
+            defaultValue={parcel?.parcelType}
             type="text"
             name="parcelType"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             required
           />
@@ -141,9 +157,17 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Parcel Weight (kg)</label>
           <input
+            value={weight}
             type="number"
             name="parcelWeight"
-            onChange={handleChange}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === "") {
+                setWeight(""); // Allow clearing
+              } else {
+                setWeight(Number(value));
+              }
+            }}
             className="w-full border rounded p-2"
             required
           />
@@ -153,9 +177,9 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Receiver’s Name</label>
           <input
+            defaultValue={parcel?.receiverName}
             type="text"
             name="receiverName"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             required
           />
@@ -165,9 +189,9 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Receiver's Phone Number</label>
           <input
+            defaultValue={parcel?.receiverPhone}
             type="text"
             name="receiverPhone"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             required
           />
@@ -177,8 +201,8 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Parcel Delivery Address</label>
           <textarea
+            defaultValue={parcel?.deliveryAddress}
             name="deliveryAddress"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             rows={3}
             required
@@ -189,9 +213,9 @@ const BookParcel = () => {
         <div>
           <label className="block font-semibold">Requested Delivery Date</label>
           <input
+            defaultValue={parcel?.deliveryDate}
             type="date"
             name="deliveryDate"
-            onChange={handleChange}
             className="w-full border rounded p-2"
             required
           />
@@ -203,10 +227,10 @@ const BookParcel = () => {
             Delivery Address Latitude
           </label>
           <input
+            defaultValue={parcel?.latitude}
             type="number"
             name="latitude"
-            onChange={handleChange}
-            step="any"
+            // step="any"
             className="w-full border rounded p-2"
             required
           />
@@ -218,9 +242,9 @@ const BookParcel = () => {
             Delivery Address Longitude
           </label>
           <input
+            defaultValue={parcel?.longitude}
             type="number"
             name="longitude"
-            onChange={handleChange}
             step="any"
             className="w-full border rounded p-2"
             required
@@ -229,27 +253,24 @@ const BookParcel = () => {
         {/* price */}
 
         <div>
-          <label className="block font-semibold">
-            Price
-          </label>
+          <label className="block font-semibold">Price</label>
           <input
             type="number"
             name="price"
             value={price}
             // onChange={handleChange}
-            
+
             className="w-full border rounded p-2 bg-slate-100 cursor-not-allowed"
-            
             readOnly
           />
         </div>
 
         <button className="btn bg-gradient-to-br from-[#4f46e5] via-[#3b82f6] to-[#06b6d4] hover:transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105  text-white w-full ">
-          Book Parcel
+          Update Parcel
         </button>
       </form>
     </div>
   );
 };
 
-export default BookParcel;
+export default UpdateParcel;

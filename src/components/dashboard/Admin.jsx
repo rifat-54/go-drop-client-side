@@ -10,25 +10,25 @@ const Admin = ({handleOpen}) => {
     return (
         <div>
           <ul className="ml-10 mt-10 space-y-5 md:text-xl">
-            <li className="flex gap-4 items-center">
+            <li onClick={handleOpen} className="flex gap-4 items-center">
               <span>
               <FcStatistics />
               </span>
               <NavLink to={"/dashboard/statistics"}> Statistics</NavLink>
             </li>
-            <li className="flex gap-4 items-center">
+            <li onClick={handleOpen} className="flex gap-4 items-center">
               <span>
               <FaUsers />
               </span>
               <NavLink to={"/dashboard/all-users"}>All Users</NavLink>
             </li>
-            <li className="flex gap-4 items-center">
+            <li onClick={handleOpen} className="flex gap-4 items-center">
               <span>
               <FiTruck />
               </span>
               <NavLink to={"/dashboard/all-parcels"}>All Parcels</NavLink>
             </li>
-            <li className="flex gap-4 items-center">
+            <li onClick={handleOpen} className="flex gap-4 items-center">
               <span>
               <FaUsersCog />
               </span>

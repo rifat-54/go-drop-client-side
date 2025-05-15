@@ -23,7 +23,7 @@ const MyDeliveryList = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  console.log(deiveryList);
+  // console.log(deiveryList);
 
  
 
@@ -46,7 +46,7 @@ const MyDeliveryList = () => {
 
         try {
           const {data}=await axiosSecure.patch(`/update-booking-status/${id}`,{newStatus})
-          console.log(data);
+          // console.log(data);
           if(data?.modifiedCount){
             Swal.fire({
               title: "Updated!",
