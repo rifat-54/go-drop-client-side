@@ -6,12 +6,14 @@ import LoadingSpinner from "./../components/ShareComponents/LoadingSpinner";
 import RevewModal from "../components/modal/RevewModal";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import Pagenation from "../components/ShareComponents/Pagenation";
 
 const MyParcel = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
   const [id, setId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [data,returnData]=useState([])
 
   const {
     data: myParcel = [],
@@ -97,7 +99,7 @@ const MyParcel = () => {
             </tr>
           </thead>
           <tbody>
-            {myParcel.map((parcel, index) => (
+            {data?.map((parcel, index) => (
               <tr
                 key={parcel._id}
                 className={` ${index % 2 === 0 ? "bg-white" : "bg-gray-100"}`}
@@ -117,16 +119,16 @@ const MyParcel = () => {
                   <span
                     className={`px-2 py-1 block rounded text-white font-semibold ${
                       parcel?.status === "Pending"
-                        ? "bg-yellow-500"
+                        ? "text-yellow-500"
                         : parcel?.status === "On The Way"
-                        ? "bg-blue-500"
+                        ? "text-blue-500"
                         : parcel?.status === "Delivered"
-                        ? "bg-green-600"
+                        ? "text-green-600"
                         : parcel?.status === "returned"
-                        ? "bg-purple-500"
+                        ? "text-purple-500"
                         : parcel?.status === "Cancelled"
-                        ? "bg-red-500"
-                        : "bg-gray-400"
+                        ? "text-red-500"
+                        : "text-gray-400"
                     }`}
                   >
                     {parcel?.status}
@@ -179,7 +181,7 @@ const MyParcel = () => {
                 <td className="px-6 py-3">
                 {parcel?.paymentStatus==='Payed' || parcel?.status!=='Delivered' ?
                 <button disabled  className="bg-gray-100 text-black px-2 py-1 rounded cursor-not-allowed">
-                   Pay
+                   {parcel?.paymentStatus==="Payed" ?'Payed':'Ptext'}
                 </button>
               :
               <Link to={`/dashboard/payment/${parcel?._id}`}
@@ -195,6 +197,11 @@ const MyParcel = () => {
             ))}
           </tbody>
         </table>
+        <Pagenation
+        perpage={6}
+          array={myParcel}
+          setReturnArray={returnData}
+        ></Pagenation>
       </div>
       <div className="fixed overflow-y-auto max-h-[90vh] top-[0%] w-full md:w-11/12 lg:w-9/12 left-[0%]  md:left-[35%]">
         {modalOpen && (

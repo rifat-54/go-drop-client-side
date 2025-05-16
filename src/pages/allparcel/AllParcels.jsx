@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import ManageParcelModal from "../../components/modal/ManageParcelModal";
+import Pagenation from "../../components/ShareComponents/Pagenation";
 
 const AllParcels = () => {
   const axiosSecure = useAxiosSecure();
   const [openModal, setOpenModal] = useState(false);
   const[parcelid,setParcelId]=useState(null)
+  const[data,returnData]=useState([])
 
 
   // get all parcel data
@@ -59,7 +61,7 @@ const AllParcels = () => {
             </tr>
           </thead>
           <tbody>
-            {allparcel.map((parcel, index) => (
+            {data?.map((parcel, index) => (
             
               <tr key={index}>
                 <td>{parcel?.name}</td>
@@ -105,6 +107,11 @@ const AllParcels = () => {
             ))}
           </tbody>
         </table>
+        <Pagenation
+        perpage={7}
+          array={allparcel}
+          setReturnArray={returnData}
+        ></Pagenation>
       </div>
       <div className="fixed top-[20%] w-full md:w-11/12 lg:w-9/12 left-[0%]  md:left-[35%]">
         {openModal && (

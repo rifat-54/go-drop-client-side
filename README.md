@@ -5,6 +5,9 @@ Delivery Man Password:soPh@ia23
 admin Email   : admin12@gmail.com
 admin Password: Ad@min23
 
+Live Link:https://go-drop-eb0ec.web.app/
+
+
 freature 
    . use jwt for token verify and make website secure
    . use firebase for authentication

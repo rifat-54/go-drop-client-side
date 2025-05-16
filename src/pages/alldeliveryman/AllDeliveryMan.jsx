@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import LoadingSpinner from "../../components/ShareComponents/LoadingSpinner";
 import toast from "react-hot-toast";
+import Pagenation from "../../components/ShareComponents/Pagenation";
 
 const AllDeliveryMan = () => {
   const axiosSecure = useAxiosSecure();
+  const[data,returnData]=useState([])
   const { data: allDeliveryman = [], isLoading,refetch } = useQuery({
     queryKey: ["allDeliveryman"],
     queryFn: async () => {
@@ -51,7 +53,7 @@ const AllDeliveryMan = () => {
             </tr>
           </thead>
           <tbody>
-            {allDeliveryman.map((man, index) => (
+            {data?.map((man, index) => (
               <tr key={man._id}>
                 <td>{index + 1}</td>
                 <td>{man?.name}</td>
@@ -76,6 +78,11 @@ const AllDeliveryMan = () => {
             ))}
           </tbody>
         </table>
+        <Pagenation
+        perpage={5}
+          array={allDeliveryman}
+          setReturnArray={returnData}
+        ></Pagenation>
       </div>
     </div>
   );
