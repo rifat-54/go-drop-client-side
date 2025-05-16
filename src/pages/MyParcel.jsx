@@ -31,7 +31,7 @@ const MyParcel = () => {
     return <LoadingSpinner></LoadingSpinner>;
   }
 
-  console.log(myParcel);
+  // console.log(myParcel);
 
   const getDateFrom_id = (id) => {
     return new Date(parseInt(id.substring(0, 8), 16)*1000).toLocaleDateString();

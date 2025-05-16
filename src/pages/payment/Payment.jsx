@@ -27,7 +27,7 @@ const Payment = () => {
     }
 
 
-    console.log(myParcel);
+    // console.log(myParcel);
 
 
     return (

@@ -1,6 +1,8 @@
 import React from 'react';
 import ButtonPrimary from '../../../components/ShareComponents/ButtonPrimary';
 import TypeWriter from '../../../utilities/TypeWriter';
+import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
     return (
@@ -19,9 +21,12 @@ const Banner = () => {
       <p className="mb-5 text-gray-300">
       GoDrop is the ultimate parcel control center — book, assign, and deliver with full-stack power. Zero hassle. Full speed.
       </p>
+      <Link to={'/dashboard'}>
       <ButtonPrimary text='Get Started'></ButtonPrimary>
+      </Link>
     </div>
   </div>
+  
 </div>
         </div>
     );

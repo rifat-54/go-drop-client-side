@@ -76,7 +76,7 @@ const CheckOutFrom = ({ id, data, price }) => {
       },
     });
 
-    console.log(paymentIntent);
+    // console.log(paymentIntent);
 
     const purchaseInfo = {
       email: user?.email,
@@ -90,10 +90,10 @@ const CheckOutFrom = ({ id, data, price }) => {
     };
 
     if (paymentIntent.status === "succeeded") {
-      console.log(purchaseInfo);
+      // console.log(purchaseInfo);
       try {
         const { data } = await axiosSecure.post(`/payment/${id}`, purchaseInfo);
-        console.log(data);
+        // console.log(data);
 
         if (data?.insertedId){
             toast.success("Succesfully Payed!");

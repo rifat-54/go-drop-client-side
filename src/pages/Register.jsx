@@ -83,20 +83,20 @@ const Register = () => {
 
                 try {
                   const {data}=await axiosPublic.post('/users',info);
+                  console.log('data->',data);
                  
                 } catch (error) {
                   
                 }
 
-                navigate(location?.state)
+                // navigate(location?.state)
             })
         })
       } catch (error) {
         
       }
 
-    // Handle registration logic here (e.g., API call)
-    // console.log("Form submitted:", formData);
+   
   };
 
   return (

@@ -18,6 +18,7 @@ import Profile from "../pages/profile/Profile";
 import VerifyDeliveryMan from "../pages/verify/VerifyDeliveryMan";
 import UpdateParcel from "../pages/UpdateParcel";
 import Payment from "../pages/payment/Payment";
+import DashboardRedirect from "../pages/DashboardRedirect";
 
 const routes=createBrowserRouter([
     {
@@ -46,6 +47,10 @@ const routes=createBrowserRouter([
         path:"/dashboard",
         element:<PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children:[
+            {
+                index: true, 
+                element: <DashboardRedirect />
+            },
             {
                path:'/dashboard/book-parcel',
                element:<BookParcel></BookParcel> 
