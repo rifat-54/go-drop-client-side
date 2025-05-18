@@ -40,7 +40,7 @@ const MyDeliveryList = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, deliver it!",
     }).then(async (result) => {
       if (result.isConfirmed) {
         // update stauts
