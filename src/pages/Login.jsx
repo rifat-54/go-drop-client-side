@@ -29,8 +29,12 @@ const Login = () => {
                     toast.success("Successfully Login")
                     navigate(from)
                 })
+                .catch((err)=>{
+                  // console.log('err->',err.message);
+                  toast.error('email and password not match')
+                })
             } catch (error) {
-                
+                // console.log('error-> ',error);
             }
      }
 
