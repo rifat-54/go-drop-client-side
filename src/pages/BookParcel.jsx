@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import useAuth from "../hooks/useAuth";
-import useAxiosSecure from './../hooks/useAxiosSecure';
+import useAxiosSecure from "./../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-
 const BookParcel = () => {
   const { user } = useAuth();
-  
-  const axiosSecure=useAxiosSecure()
-  const [price,setPrice]=useState(0)
-  const navigate=useNavigate()
 
+  const axiosSecure = useAxiosSecure();
+  const [price, setPrice] = useState(0);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     phone: "",
@@ -23,7 +21,6 @@ const BookParcel = () => {
     deliveryDate: "",
     latitude: "",
     longitude: "",
-   
   });
 
   const handleChange = (e) => {
@@ -31,29 +28,27 @@ const BookParcel = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     // calculate price useing weight
-    if(name==='parcelWeight'){
-        let num=parseInt(value)
-       
-        let total=0;
+    if (name === "parcelWeight") {
+      let num = parseInt(value);
+      if (num < 1) {
+        return;
+      }
+      let total = 0;
+      // console.log(num, typeof num);
 
-       
-        if(num<=1){
-            total=50;
-        }else if(num>1 && num<=2){
-            total=100;
-        }else{
-            total=150;
-        }
+      if (num <= 1) {
+        total = 50;
+      } else if (num > 1 && num <= 2) {
+        total = 100;
+      } else {
+        total = 150;
+      }
 
-        setPrice(total)
-       
-
-
-        
+      setPrice(total);
     }
   };
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const parcelDetails = {
       name: user?.displayName,
@@ -66,25 +61,22 @@ const BookParcel = () => {
     // Submit to backend here
 
     try {
-      const {data}=await axiosSecure.post('/book-parcel',parcelDetails)
-     
-      if(data.insertedId){
+      const { data } = await axiosSecure.post("/book-parcel", parcelDetails);
+
+      if (data.insertedId) {
         Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Successfully Booked a Parcel",
           showConfirmButton: false,
-          timer: 1500
+          timer: 1500,
         });
 
-        navigate('/dashboard/my-parcel');
-        
+        navigate("/dashboard/my-parcel");
       }
-      
+    } catch (error) {}
 
-    } catch (error) {
-      
-    }
+
   };
 
   return (
@@ -146,6 +138,8 @@ const BookParcel = () => {
             onChange={handleChange}
             className="w-full border rounded p-2"
             required
+            min={1}
+            onWheel={(e) => e.target.blur()}
           />
         </div>
 
@@ -229,17 +223,14 @@ const BookParcel = () => {
         {/* price */}
 
         <div>
-          <label className="block font-semibold">
-            Price
-          </label>
+          <label className="block font-semibold">Price</label>
           <input
             type="number"
             name="price"
             value={price}
             // onChange={handleChange}
-            
+
             className="w-full border rounded p-2 bg-slate-100 cursor-not-allowed"
-            
             readOnly
           />
         </div>

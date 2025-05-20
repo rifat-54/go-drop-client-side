@@ -36,7 +36,7 @@ const UpdateParcel = () => {
 
   useEffect(() => {
     const num = parseInt(weight);
-    if (isNaN(num)) return;
+    if (isNaN(num) || num<1) return;
 
     let total = 0;
 
@@ -98,9 +98,10 @@ const UpdateParcel = () => {
         });
 
         navigate("/dashboard/my-parcel");
-        
       }
     } catch (error) {}
+
+
   };
 
   return (
@@ -170,6 +171,8 @@ const UpdateParcel = () => {
             }}
             className="w-full border rounded p-2"
             required
+            min={1}
+            onWheel={(e)=>e.target.blur()}
           />
         </div>
 

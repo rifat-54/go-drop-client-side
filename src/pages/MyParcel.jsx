@@ -13,7 +13,7 @@ const MyParcel = () => {
   const axiosSecure = useAxiosSecure();
   const [id, setId] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-  const [data,returnData]=useState([])
+  const [data, returnData] = useState([]);
 
   const {
     data: myParcel = [],
@@ -34,7 +34,9 @@ const MyParcel = () => {
   // console.log(myParcel);
 
   const getDateFrom_id = (id) => {
-    return new Date(parseInt(id.substring(0, 8), 16)*1000).toLocaleDateString();
+    return new Date(
+      parseInt(id.substring(0, 8), 16) * 1000
+    ).toLocaleDateString();
   };
 
   // console.log(myParcel);
@@ -63,7 +65,7 @@ const MyParcel = () => {
           const { data } = await axiosSecure.patch(
             `/update-delivery-status/${id}`
           );
-          
+
           if (data.modifiedCount) {
             refetch();
             Swal.fire({
@@ -117,7 +119,7 @@ const MyParcel = () => {
                 {/* Status with color */}
                 <td className="px-6 py-3 whitespace-nowrap">
                   <span
-                    className={`px-2 py-1 block rounded text-white font-semibold ${
+                    className={`px-2 py-1 block rounded font-semibold ${
                       parcel?.status === "Pending"
                         ? "text-yellow-500"
                         : parcel?.status === "On The Way"
@@ -137,7 +139,8 @@ const MyParcel = () => {
 
                 {/* Update button */}
                 <td className="px-6 py-3">
-                  <Link to={`/dashboard/update-parcel/${parcel._id}`}
+                  <Link
+                    to={`/dashboard/update-parcel/${parcel._id}`}
                     disabled={parcel.status !== "Pending"}
                     onClick={() => handleUpdate(parcel._id)}
                     className={`px-2 py-1 rounded ${
@@ -179,26 +182,29 @@ const MyParcel = () => {
 
                 {/* Pay button (Bonus guideline logic to be implemented) */}
                 <td className="px-6 py-3">
-                {parcel?.paymentStatus==='Payed' || parcel?.status!=='Delivered' ?
-                <button disabled  className="bg-gray-100 text-black px-2 py-1 rounded cursor-not-allowed">
-                   {parcel?.paymentStatus==="Payed" ?'Payed':'Ptext'}
-                </button>
-              :
-              <Link to={`/dashboard/payment/${parcel?._id}`}
-                    
-                    className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700"
-                  >
-                    Pay
-                  </Link>
-              }
-                  
+                  {parcel?.paymentStatus === "Payed" ||
+                  parcel?.status !== "Delivered" ? (
+                    <button
+                      disabled
+                      className="bg-gray-100 text-black px-2 py-1 rounded cursor-not-allowed"
+                    >
+                      {parcel?.paymentStatus === "Payed" ? "Payed" : "Pay"}
+                    </button>
+                  ) : (
+                    <Link
+                      to={`/dashboard/payment/${parcel?._id}`}
+                      className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700"
+                    >
+                      Pay
+                    </Link>
+                  )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
         <Pagenation
-        perpage={6}
+          perpage={6}
           array={myParcel}
           setReturnArray={returnData}
         ></Pagenation>
