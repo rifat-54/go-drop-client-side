@@ -4,6 +4,8 @@ import OurFreature from './homeComponents/OurFreature';
 
 import TopDelivaryMan from './homeComponents/TopDelivaryMan';
 import Stats from './homeComponents/Stats';
+import HowItWork from './homeComponents/HowItWork';
+import Testimonials from './homeComponents/Testimonials';
 
 
 const Home = () => {
@@ -13,6 +15,8 @@ const Home = () => {
             <OurFreature></OurFreature>
             <Stats></Stats>
             <TopDelivaryMan></TopDelivaryMan>
+            <HowItWork></HowItWork>
+            <Testimonials></Testimonials>
         </div>
     );
 };

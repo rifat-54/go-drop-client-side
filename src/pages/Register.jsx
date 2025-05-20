@@ -11,7 +11,7 @@ import useAxiosPublic from "../hooks/useAxiosPublic";
 
 const Register = () => {
 
-    const{updateUser, createUser,}=useAuth()
+    const{updateUser, createUser,loginUser}=useAuth()
     const axiosPublic=useAxiosPublic()
 
   const [showPassword, setShowPassword] = useState(false);
@@ -83,13 +83,22 @@ const Register = () => {
 
                 try {
                   const {data}=await axiosPublic.post('/users',info);
-                  console.log('data->',data);
+                
+                  // login user after register
+                  try {
+                    loginUser(formData?.email,formData?.password)
+                    navigate(location?.state)
+                  } catch (error) {
+                    
+                  }
+
+
                  
                 } catch (error) {
                   
                 }
 
-                // navigate(location?.state)
+                
             })
         })
       } catch (error) {

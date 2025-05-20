@@ -133,7 +133,7 @@ const Navber = () => {
                 >
                   <li>
                     <a className="justify-between">
-                      Profile
+                      {role}
                       <span className="badge">{user?.displayName}</span>
                     </a>
                   </li>
