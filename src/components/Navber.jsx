@@ -45,8 +45,8 @@ const Navber = () => {
   };
 
   return (
-    <div>
-      <div className="navbar px-1 flex justify-between bg-[#1874c1] text-[#fffe] shadow-sm">
+    <div className="bg-[#1874c1]">
+      <div className="navbar px-1 max-w-7xl mx-auto flex justify-between  text-[#fffe] shadow-sm">
         <div className="flex items-center md:ml-1 gap-5">
           <img
             referrerPolicy="no-referrer"
